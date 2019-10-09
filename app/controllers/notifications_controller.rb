@@ -21,6 +21,7 @@ class NotificationsController < ApplicationController
             aux=Notification.where(user_id:params[:user_id],chat_id:chat).order("created_at ASC").last(3)
             ans.push(aux)
         end
+        ans.push({"num_of_messages"=>notifications.length})
         render json: ans, status:200
     end
 
