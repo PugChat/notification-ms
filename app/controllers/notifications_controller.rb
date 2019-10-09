@@ -17,13 +17,10 @@ class NotificationsController < ApplicationController
                 chats.push(notification.chat_id)
             end 
         end
-        puts chats
         chats.each do |chat|
-            aux=Notification.where(user_id:params[:user_id],chat_id:chat)
-            puts aux
+            aux=Notification.where(user_id:params[:user_id],chat_id:chat).order("created_at ASC").last(3)
             ans.push(aux)
         end
-        puts ans
         render json: ans, status:200
     end
 
