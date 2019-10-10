@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_10_09_060550) do
 
-  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.text "message"
     t.integer "user_id"
     t.integer "sender_id"
