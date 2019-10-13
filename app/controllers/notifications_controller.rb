@@ -18,6 +18,9 @@ class NotificationsController < ApplicationController
     end
     
     def show 
+        if !params[:user_id]
+            return
+        end
         chats =[]
         ans=[]
         notifications = Notification.where(user_id:params[:user_id])
@@ -27,10 +30,9 @@ class NotificationsController < ApplicationController
             end 
         end
         chats.each do |chat|
-            aux=Notification.where(user_id:params[:user_id],chat_id:chat).order("created_at ASC").last(3)
+            aux=Notification.where(user_id:params[:user_id],chat_id:chat).order("created_at ASC")
             ans.push(aux)
         end
-        ans.push({"num_of_messages"=>notifications.length})
         render json: ans, status:200
     end
 
@@ -40,6 +42,7 @@ class NotificationsController < ApplicationController
         notifications.each do |notification|
             notification.destroy
         end
+        render json: params[:user_id], status: 200
     end
 
     def notification_params
