@@ -2,15 +2,24 @@ class NotificationsController < ApplicationController
     def create 
         users = params[:users]
         notifications=[]
-        users.each do |user|
-            notification = Notification.new(message: notification_params[:message], user_id: user, sender_id:notification_params[:sender_id], chat_id: notification_params[:chat_id])
-            notifications.push(notification)
+        begin
+            users.each do |user|
+                notification = Notification.new(message: notification_params[:message], user_id: user, sender_id:notification_params[:sender_id], chat_id: notification_params[:chat_id])
+                notifications.push(notification)
+                if !notification.save
+                    render json: "error",status: :unprocessable_entity
+                    return
+                end
+            end
+            render json: notifications, status: 200
+        rescue
+            notification = Notification.new(message: notification_params[:message], user_id: users, sender_id:notification_params[:sender_id], chat_id: notification_params[:chat_id]) 
             if !notification.save
                 render json: "error",status: :unprocessable_entity
                 return
             end
+            render json: notification, status: 200
         end
-        render json: notifications, status: 200
     end
 
     def get_users
@@ -38,11 +47,10 @@ class NotificationsController < ApplicationController
 
     def destroy
         notifications = Notification.where(user_id:params[:user_id])
-        puts notifications
         notifications.each do |notification|
             notification.destroy
         end
-        render json: params[:user_id], status: 200
+        render json:nil, status: 204
     end
 
     def notification_params

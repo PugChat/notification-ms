@@ -1,0 +1,98 @@
+---
+swagger: "2.0"
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: PugChat-notification-ms
+  contact:
+    email: you@your-company.com
+host: virtserver.swaggerhub.com
+basePath: /bdvegat/pugchat_notification_ms/1.0.0
+schemes:
+- http
+paths:
+  /notifications/show:
+    get:
+      summary: shows notififcations of the user
+      description: |
+        By passing the user_id, you can search for
+        available notifications for the user
+      operationId: showsNotifications
+      produces:
+      - application/json
+      parameters:
+      - name: user_id
+        in: query
+        description: the id of the user
+        required: true
+        type: integer
+      responses:
+        200:
+          description: notifications of the user
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Notification'
+  /notifications/create:
+    post:
+      summary: creates notifications for the users
+      operationId: createNotification
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: create petition
+        description: array of users, notification
+        required: false
+        schema:
+          $ref: '#/definitions/Notification_create'
+      responses:
+        200:
+          description: created notifications
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Notification'
+  /notifications/destroy:
+    delete:
+      summary: destroy notifications of user
+      description: |
+        By passing the user_id, you can search for
+        available notifications for the user
+      operationId: destroyNotifications
+      produces:
+      - application/json
+      parameters:
+      - name: user_id
+        in: query
+        description: the id of the user
+        required: true
+        type: integer
+      responses:
+        204:
+          description: no content
+definitions:
+  Notification:
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+      user_id:
+        type: string
+      sender_id:
+        type: integer
+      chat_id:
+        type: integer
+      created_at:
+        type: string
+  Notification_create:
+    properties:
+      users:
+        type: array
+        items:
+          type: integer
+      Notification:
+        $ref: '#/definitions/Notification'
