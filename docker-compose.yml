@@ -13,6 +13,7 @@ services:
       MYSQL_DATABASE: PugChat_notification_ms_development
       MYSQL_USER: sa
       MYSQL_PASSWORD: 2019ii
+      MYSQL_HOST: notifications-db
     ports: 
       - "3308:3306"
 

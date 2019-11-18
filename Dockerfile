@@ -1,4 +1,4 @@
-FROM ruby:2.6.1
+FROM ruby:2.6.5
 RUN apt-get update 
 RUN apt-get install default-libmysqlclient-dev
 
@@ -13,3 +13,5 @@ ADD Gemfile /notification-ms/Gemfile
 ADD Gemfile.lock /notification-ms/Gemfile.lock
 RUN bundle install
 ADD . /notification-ms
+
+EXPOSE 4001

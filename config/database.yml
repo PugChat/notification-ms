@@ -16,8 +16,9 @@ default: &default
   username: root
   password: mysecretpw
   #hay que cambiarlo para el pc donde corre, ejecutar en consola ip addr show docker0
-  host: 172.17.0.1
-  port: 3308
+  host: notification-db
+  #port: 3308
+  socket: /tmp/mysqld.sock
 development:
   <<: *default
   database: PugChat_notification_ms_development
